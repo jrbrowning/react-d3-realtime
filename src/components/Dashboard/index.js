@@ -8,7 +8,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`https://covidtracking.com/api/states`).then(res => {
+    axios.get(`https://covidtracking.com/api/states/daily?state=NY`).then(res => {
       const usStates = res.data;
       this.setState({ usStates });
     });
@@ -17,8 +17,8 @@ export default class Dashboard extends React.Component {
   render() {
     return (
       <ul>
-        {this.state.usStates.map(region => (
-          <li>{region.state}</li>
+        {this.state.usStates.map((region, index) => (
+          <li key={index}>{region.date} : {region.positive} : {region.totalTestResults} </li>
         ))}
       </ul>
     );
