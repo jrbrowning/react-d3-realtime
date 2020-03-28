@@ -1,10 +1,26 @@
 import React from "react";
+import axios from 'axios';
 import "../../App.css";
 
-const Dashboard = () => {
-  return (
-        <p>The next chapter</p>
-  );
-};
+export default class Dashboard extends React.Component {
+ state = {
+    usStates: []
+  }
 
-export default Dashboard ;
+  componentDidMount() {
+    axios.get(`https://covidtracking.com/api/states`).then(res => {
+      const usStates = res.data;
+      this.setState({ usStates });
+    });
+  }
+
+  render() {
+    return (
+      <ul>
+        {this.state.usStates.map(region => (
+          <li>{region.state}</li>
+        ))}
+      </ul>
+    );
+  }
+}
